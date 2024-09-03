@@ -1,5 +1,3 @@
-version: "3.8"
- 
 services:
   service-gateway-database:
     image: postgres:9.6
