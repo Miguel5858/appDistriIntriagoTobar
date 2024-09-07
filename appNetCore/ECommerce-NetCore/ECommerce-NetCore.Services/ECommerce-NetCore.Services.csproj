@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>ECommerce_NetCore.Services</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerce-NetCore.DataAccess\ECommerce-NetCore.DataAccess.csproj" />
+    <ProjectReference Include="..\ECommerce-NetCore.Dto\ECommerce-NetCore.Dto.csproj" />
+  </ItemGroup>
+
+</Project>
