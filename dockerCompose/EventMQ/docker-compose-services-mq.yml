@@ -1,9 +1,7 @@
-version: "3.8"
-
 services:
   service-event:
-    image: rabbitmq:3.8.13-management
-    container_name: component-event
+    image: rabbitmq:3.13.7-management
+    container_name: component-event-rabbitmq
     restart: no
     environment:
       - RABBITMQ_DEFAULT_USER=admin

@@ -39,7 +39,6 @@ pip install sqlalchemy
 
 *********************CONFIGURAR ORM PARA CREACION DE TABLAS EN MYSQL DESDE Python*************************
 
---crear carpeta config y dentro el archivo database.py
 --crear el main.py con los respectivos metodos APIs
 
 -main.py
