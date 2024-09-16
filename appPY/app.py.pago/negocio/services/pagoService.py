@@ -1,12 +1,10 @@
 from datetime import datetime
+from threading import Thread
 from accessData.conexion import Database, DATABASE_URL
 from accessData.entities.pagos import Base, Pago
 from negocio.dtos.pagoDto import PagoDto
 from negocio.services.eventService import RabbitMQPublisher
 from negocio.services.genericService import GenericService
-import pika
-import json
-
 
 class PagoService:
     
@@ -17,6 +15,7 @@ class PagoService:
         Base.metadata.create_all(bind= self.engine)
         self.pagoService = GenericService[Pago](Pago, self.db)
         self.publisher = RabbitMQPublisher()
+        self.mensajes_recibidos = []
     
     def RealizarPago(self, pagoDto: PagoDto):
         # Obtener la fecha actual
@@ -45,3 +44,6 @@ class PagoService:
     def ConsultarPago(self):
         listaPagos = self.pagoService.getAll()
         return listaPagos
+    
+    def GuardarFactura(self):
+        pass
