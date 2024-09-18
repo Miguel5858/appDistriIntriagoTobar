@@ -3,32 +3,45 @@ import json
 from negocio.dtos.pagoDto import PagoDto
 
 class RabbitMQPublisher:
+    
     def __init__(self, host='localhost', port=5672, user='admin', password='admin'):
         self.host = host
         self.port = port
         self.credentials = pika.PlainCredentials(user, password)
+        self.connection_params = pika.ConnectionParameters(
+            self.host,
+            self.port,
+            '/',
+            self.credentials
+        )
+
+    def _connect(self):
+        return pika.BlockingConnection(self.connection_params)
 
     def publish_message(self, pago: PagoDto):
-        # Configurar la conexión a RabbitMQ en el contenedor Docker
-        connection = pika.BlockingConnection(pika.ConnectionParameters(
-            self.host,  # RabbitMQ host
-            self.port,  # RabbitMQ port
-            '/',        # Virtual host por defecto
-            self.credentials  # Credenciales que configuraste
-        ))
-
+        connection = self._connect()
         channel = connection.channel()
         nombre_cola = 'pagoDeposito'
 
-        # Declara la cola
         channel.queue_declare(queue=nombre_cola)
-
-        # Convierte la lista de objetos a JSON
-        #mensaje = json.dumps([pagos.to_dict() for pago in pagos])
-        #Convierte un objeto a JSON
         mensaje = json.dumps(pago.__dict__)
-
-        # Publica el mensaje
-        channel.basic_publish(exchange='',routing_key=nombre_cola, body=mensaje)
+        channel.basic_publish(exchange='', routing_key=nombre_cola, body=mensaje)
         print("Mensaje enviado a la cola")
         connection.close()
+
+    def consume_messages(self, mensajes_recibidos, nombre_cola='categoriesQueue'):
+        connection = self._connect()
+        channel = connection.channel()
+
+        channel.queue_declare(queue=nombre_cola)
+
+        def callback(ch, method, properties, body):
+            mensaje = json.loads(body)
+            print(f"Mensaje recibido: {mensaje}")
+            
+            #Agregar el mensaje a la lista compartida
+            mensajes_recibidos.append(mensaje)
+
+        channel.basic_consume(queue=nombre_cola, on_message_callback=callback, auto_ack=True)
+        print('Esperando mensajes...')
+        channel.start_consuming()

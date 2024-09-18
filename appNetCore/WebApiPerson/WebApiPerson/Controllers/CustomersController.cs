@@ -1,35 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using WebApiPerson.Services.Intefaces;
-using WebApiPerson.Services.MQ;
 using static WebApiPerson.Dtos.EcommerceDtos;
+using WebApiPerson.Services.MQ;
+using WebApiPerson.Services.Intefaces;
 
 namespace WebApiPerson.Controllers
 {
 
     [ApiController]
     [Route("api/[controller]")]
-    public class CategoriesController : ControllerBase
+    public class CustomersController : ControllerBase
     {
-        private readonly ICategoryService _service;
-        private readonly RabbitMQService _rabbitMQService;
 
+        private readonly ICustomersService _service;
 
-        public CategoriesController(ICategoryService service, RabbitMQService rabbitMQService)
+        public CustomersController(ICustomersService service)
         {
             _service = service;
-            _rabbitMQService = rabbitMQService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCategories()
+        public async Task<IActionResult> GetCustomers()
         {
             return Ok(await _service.ListAsync());
         }
 
         [HttpGet]
         [Route("id/{id?}")]
-        public async Task<IActionResult> GetCategories(string id)
+        public async Task<IActionResult> GetCustomers(string id)
         {
             var response = await _service.GetAsync(id);
 
@@ -43,18 +41,18 @@ namespace WebApiPerson.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> PostCategories([FromBody] CategoryDto request)
+        public async Task<IActionResult> PostCustomer([FromBody] CustomerDto request)
         {
             var response = await _service.CreateAsync(request);
-            
+
             if (response.Success)
             {
                 request.Id = response.Result;
-                var message = JsonConvert.SerializeObject(request);
-                _rabbitMQService.PublishToQueue("categoriesQueue", message);
+                //var message = JsonConvert.SerializeObject(request);
+                //_rabbitMQService.PublishToQueue("categoriesQueue", message);
             }
 
-            return CreatedAtAction("GetCategories", new
+            return CreatedAtAction("GetCustomers", new
             {
                 id = response.Result
             }, response);
@@ -63,14 +61,14 @@ namespace WebApiPerson.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> PutCategories(string id, [FromBody] CategoryDto request)
+        public async Task<IActionResult> PutCustomers(string id, [FromBody] CustomerDto request)
         {
             return Ok(await _service.UpdateAsync(id, request));
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteCategories(string id)
+        public async Task<IActionResult> DeleteCustomers(string id)
         {
             var response = await _service.DeleteAsync(id);
 

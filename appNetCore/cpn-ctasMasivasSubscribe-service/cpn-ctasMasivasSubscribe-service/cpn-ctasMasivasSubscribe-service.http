@@ -1,6 +1,0 @@
-@cpn_ctasMasivasSubscribe_service_HostAddress = http://localhost:5044
-
-GET {{cpn_ctasMasivasSubscribe_service_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

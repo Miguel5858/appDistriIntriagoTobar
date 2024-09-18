@@ -21,6 +21,7 @@ namespace WebApiPerson.Services.Implementations
             categoryEntity.Name = request.Name;
             categoryEntity.Description = request.Description;
             response.Result = await Insert(categoryEntity);
+            response.Success = true;
             return response;
         }
 

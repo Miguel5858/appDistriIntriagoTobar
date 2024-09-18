@@ -1,4 +1,7 @@
-﻿namespace WebApiPerson.Dtos
+﻿using static WebApiPerson.Models.EntitiesModels;
+using System.ComponentModel.DataAnnotations;
+
+namespace WebApiPerson.Dtos
 {
     public class EcommerceDtos
     {
@@ -24,11 +27,32 @@
 
         }
 
+        public class CustomersDtoCollectionResponse : BaseCollectionResponse<CustomerDto>
+        {
+
+        }
+
         public class CategoryDto
         {
             public string? Id { get; set; }
             public string? Name { get; set; }
             public string? Description { get; set; }
+        }
+
+        public class CustomerDto
+        {
+            public string? Id { get; set; }
+
+            public string? Name { get; set; }
+
+            public string? LastName { get; set; }
+
+            public string? Email { get; set; }
+
+            public DateTime BirthDate { get; set; }
+
+            public string? Dni { get; set; }
+
         }
     }
 }
