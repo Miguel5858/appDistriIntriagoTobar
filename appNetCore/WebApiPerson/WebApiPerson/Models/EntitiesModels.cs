@@ -85,9 +85,9 @@ namespace WebApiPerson.Models
 
             public DateTime SaleDate { get; set; }
 
-            public string InvoiceNumber { get; set; }
+            public string? InvoiceNumber { get; set; }
 
-            public string PaymentMethod { get; set; }
+            public string? PaymentMethod { get; set; }
 
             public decimal TotalSale { get; set; }
         }
