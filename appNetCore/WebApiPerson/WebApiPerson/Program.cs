@@ -12,6 +12,10 @@ builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("r
 
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<ICustomersService, CustomersService>();
+builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<ISalesService, SalesService>();
+builder.Services.AddTransient<ISaleDetailService, SaleDetailService>();
+
 
 // Add services to the container.
 // crear variable para la cadena de conexion
@@ -27,6 +31,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //servicio para MQ
 builder.Services.AddSingleton<RabbitMQService>();
+builder.Services.AddHostedService<RabbitMQListenerService>();
 
 
 var app = builder.Build();

@@ -29,7 +29,7 @@ class RabbitMQPublisher:
         print("Mensaje enviado a la cola")
         connection.close()
 
-    def consume_messages(self, mensajes_recibidos, nombre_cola='categoriesQueue'):
+    def consume_messages(self, mensajes_recibidos, nombre_cola='saleQueue'):
         connection = self._connect()
         channel = connection.channel()
 

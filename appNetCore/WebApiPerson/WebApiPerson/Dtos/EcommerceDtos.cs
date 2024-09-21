@@ -32,6 +32,22 @@ namespace WebApiPerson.Dtos
 
         }
 
+        public class ProductDtoCollectionResponse : BaseCollectionResponse<ProductDto>
+        {
+
+        }
+
+        public class SaleDtoCollectionResponse : BaseCollectionResponse<SaleDto>
+        {
+
+        }
+
+
+        public class SaleDetailDtoCollectionResponse : BaseCollectionResponse<SaleDetailDto>
+        {
+
+        }
+
         public class CategoryDto
         {
             public string? Id { get; set; }
@@ -53,6 +69,57 @@ namespace WebApiPerson.Dtos
 
             public string? Dni { get; set; }
 
+        }
+
+        public class ProductDto
+        {
+            public string? Id { get; set; }
+
+            public string? Name { get; set; }
+
+            public string? Description { get; set; }
+
+            public string? CategoryId { get; set; }
+
+            public decimal UnitPrice { get; set; }
+
+            public string? ProductUrl { get; set; }
+
+            public bool Active { get; set; }
+        }
+
+        public class SaleDto
+        {
+            public string? Id { get; set; }
+
+            public string? CustomerId { get; set; }
+
+            public DateTime SaleDate { get; set; }
+
+            public string? InvoiceNumber { get; set; }
+
+            public string? PaymentMethod { get; set; }
+
+            public decimal TotalSale { get; set; }
+
+            public bool Status { get; set; }
+        }
+
+        public class SaleDetailDto
+        {
+            public string? Id { get; set; }
+
+            public string? SaleId { get; set; }
+
+            public int ItemNumber { get; set; }
+
+            public string? ProductId { get; set; }
+
+            public decimal UnitPrice { get; set; }
+
+            public decimal Quantity { get; set; }
+
+            public decimal Total { get; set; }
         }
     }
 }
